@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Hools 2.0</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="app">
+
+    <header class="topbar">
+        <button class="icon-btn" id="openMenu" aria-label="Otwórz menu">☰</button>
+
+        <div class="brand">
+            <div class="brand-mark">TH</div>
+            <div>
+                <strong>The Hools</strong>
+                <span>Mobile First 2.0</span>
+            </div>
+        </div>
+
+        <button class="premium-btn">Premium</button>
+    </header>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-head">
+            <strong>Menu gry</strong>
+            <button class="icon-btn" id="closeMenu" aria-label="Zamknij menu">×</button>
+        </div>
+
+        <nav class="side-nav">
+            <a class="active" href="#">Start</a>
+            <a href="#">Kariera</a>
+            <a href="#">Pojedynek</a>
+            <a href="#">Zlecenia</a>
+            <a href="#">Turniej</a>
+            <a href="#">Twoja ekipa</a>
+            <a href="#">Osiągnięcia</a>
+            <a href="#">Inwestycje</a>
+            <a href="#">Zbrojownia</a>
+            <a href="#">Czarny rynek</a>
+            <a href="#">Ranking</a>
+            <a href="#">Społeczność</a>
+        </nav>
+    </aside>
+
+    <div class="overlay" id="overlay"></div>
+
+    <main class="content">
+
+        <section class="player-card">
+            <div class="player-main">
+                <div class="avatar">105</div>
+                <div>
+                    <p class="eyebrow">Poziom gracza</p>
+                    <h1>Witaj, Hooliganie</h1>
+                    <p class="muted">Kredyty: <strong>36 697</strong></p>
+                </div>
+            </div>
+
+            <div class="progress-box">
+                <div class="progress-label">
+                    <span>Do następnego poziomu</span>
+                    <strong>30 121 XP</strong>
+                </div>
+                <div class="progress">
+                    <span style="width: 72%"></span>
+                </div>
+            </div>
+        </section>
+
+        <section class="resources">
+            <article>
+                <span>💵</span>
+                <small>Hajs</small>
+                <strong>$3 802 500</strong>
+            </article>
+            <article>
+                <span>⚡</span>
+                <small>Energia</small>
+                <strong>2885 / 2885</strong>
+            </article>
+            <article>
+                <span>❤️</span>
+                <small>Zdrowie</small>
+                <strong>100 / 100</strong>
+            </article>
+        </section>
+
+        <section class="quick-actions">
+            <button class="action-card primary">
+                <span>⚔️</span>
+                <strong>Pojedynek</strong>
+                <small>Znajdź przeciwnika</small>
+            </button>
+
+            <button class="action-card">
+                <span>📦</span>
+                <strong>Zlecenia</strong>
+                <small>Zarabiaj hajs i exp</small>
+            </button>
+
+            <button class="action-card">
+                <span>🏆</span>
+                <strong>Ranking</strong>
+                <small>Sprawdź pozycję</small>
+            </button>
+
+            <button class="action-card">
+                <span>🛒</span>
+                <strong>Czarny rynek</strong>
+                <small>Kup sprzęt</small>
+            </button>
+        </section>
+
+        <section class="dashboard-grid">
+            <article class="panel">
+                <div class="panel-head">
+                    <h2>Aktualności</h2>
+                    <button class="ghost-btn">Wszystkie</button>
+                </div>
+
+                <div class="news-list">
+                    <div class="news-item">
+                        <time>15:52</time>
+                        <p><strong>Stomil Hools</strong> wypowiedzieli ustawkę <b>NIEZALEŻNI</b></p>
+                    </div>
+                    <div class="news-item">
+                        <time>15:41</time>
+                        <p><strong>Stomil Hools</strong> wygrali ustawkę z <b>Totalna Zagłada</b></p>
+                    </div>
+                    <div class="news-item">
+                        <time>2026-06-15</time>
+                        <p><strong>Najlepsi</strong> wygrali ustawkę z <b>Stomil Hools</b></p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="panel">
+                <div class="panel-head">
+                    <h2>Statystyki top</h2>
+                </div>
+
+                <dl class="stats-list">
+                    <div>
+                        <dt>Dzisiejsze pojedynki</dt>
+                        <dd>3</dd>
+                    </div>
+                    <div>
+                        <dt>Suma hajsu na mieście</dt>
+                        <dd>$4 084 107 418</dd>
+                    </div>
+                    <div>
+                        <dt>Najwięcej pojedynków</dt>
+                        <dd>Patryk718</dd>
+                    </div>
+                    <div>
+                        <dt>Największa aktywność</dt>
+                        <dd>THAW1920</dd>
+                    </div>
+                </dl>
+            </article>
+
+            <article class="panel clan-panel">
+                <div class="panel-head">
+                    <h2>Statystyki klubowe</h2>
+                </div>
+
+                <div class="club-stats">
+                    <div>
+                        <small>Najliczniejszy</small>
+                        <strong>Lech Poznań</strong>
+                    </div>
+                    <div>
+                        <small>Najaktywniejszy</small>
+                        <strong>Motor Lublin</strong>
+                    </div>
+                    <div>
+                        <small>Najagresywniejszy</small>
+                        <strong>Iskra Białogard</strong>
+                    </div>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <nav class="bottom-nav">
+        <a class="active" href="#">🏠<span>Start</span></a>
+        <a href="#">⚔️<span>Walka</span></a>
+        <a href="#">📦<span>Zlecenia</span></a>
+        <a href="#">🏆<span>Ranking</span></a>
+        <a href="#" id="bottomMenu">☰<span>Menu</span></a>
+    </nav>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

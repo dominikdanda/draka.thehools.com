@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TheHools 2.0 — Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="TheHools 2.0">
+        <span class="brand__main">TheHools</span><span class="brand__ver">2.0</span>
+      </a>
+
+      <nav class="topnav" aria-label="Główna nawigacja">
+        <button class="topnav__item is-active" data-view="start"><span>⌂</span>Start</button>
+        <button class="topnav__item" data-view="profil"><span>◉</span>Profil</button>
+        <button class="topnav__item" data-view="ranking"><span>♜</span>Ranking</button>
+        <button class="topnav__item" data-view="spolecznosc"><span>♣</span>Społeczność</button>
+        <button class="topnav__item" data-view="ustawienia"><span>⚙</span>Ustawienia</button>
+      </nav>
+
+      <button class="logout"><span>⇱</span> Wyloguj</button>
+    </header>
+
+    <aside class="sidebar">
+      <section class="profile-card">
+        <div class="avatar">
+          <div class="avatar__mask"></div>
+          <span class="avatar__badge">TH</span>
+        </div>
+        <div>
+          <h1>Patryk718</h1>
+          <p>Lech Poznań</p>
+          <button class="rank-btn">⚔ Szef</button>
+        </div>
+      </section>
+
+      <nav class="sidenav" aria-label="Panel boczny">
+        <button class="sidenav__item is-active"><span>⚑</span>Kariera</button>
+        <button class="sidenav__item"><span>⚔</span>Pojedynek</button>
+        <button class="sidenav__item"><span>▣</span>Zlecenia</button>
+        <button class="sidenav__item"><span>♣</span>Twoja ekipa</button>
+        <button class="sidenav__item"><span>♕</span>Osiągnięcia</button>
+        <button class="sidenav__item"><span>↗</span>Inwestycje</button>
+        <button class="sidenav__item"><span>✦</span>Narkotyki</button>
+        <button class="sidenav__item"><span>▰</span>Zbrojownia</button>
+        <button class="sidenav__item"><span>◈</span>Skup towarów</button>
+        <button class="sidenav__item"><span>▣</span>Skarbiec</button>
+      </nav>
+
+      <div class="graffiti">Loyalty<br>Honor<br>Respect</div>
+    </aside>
+
+    <main class="dashboard">
+      <section class="stats-strip" aria-label="Statystyki gracza">
+        <article class="stat stat--level">
+          <div class="stat__icon crest">P</div>
+          <div class="stat__body">
+            <small>Poziom</small>
+            <strong>105</strong>
+            <div class="bar"><span style="width:67%"></span></div>
+            <em><b>30,121</b> / 45,000 XP</em>
+          </div>
+        </article>
+        <article class="stat">
+          <small>Osiągnięcia</small>
+          <strong>45 <span>/ 116</span></strong>
+          <div class="bar bar--yellow"><span style="width:38%"></span></div>
+        </article>
+        <article class="stat">
+          <div class="stat__icon">♨</div>
+          <small>Hajs</small>
+          <strong class="green">$ 3,802,500</strong>
+          <em>582,737 / godz.</em>
+        </article>
+        <article class="stat">
+          <div class="stat__icon">⚡</div>
+          <small>Energia</small>
+          <strong class="blue">2885 <span>/ 2885</span></strong>
+          <div class="bar bar--blue"><span style="width:100%"></span></div>
+        </article>
+        <article class="stat">
+          <div class="stat__icon heart">♥</div>
+          <small>Zdrowie</small>
+          <strong class="red">100 <span>/ 100</span></strong>
+          <div class="bar bar--red"><span style="width:100%"></span></div>
+        </article>
+      </section>
+
+      <section class="hero panel panel--stadium">
+        <div class="hero__copy">
+          <h2>Witaj ponownie, Patryk718!</h2>
+          <p>Utrzymuj wpływy. Buduj siłę. Rządź dzielnicą.</p>
+        </div>
+        <div class="hero__actions">
+          <button class="action-card action-card--primary"><span>ϟ</span><b>Trenuj</b><small>Odzyskaj energię</small></button>
+          <button class="action-card"><span>▣</span><b>Zlecenia</b><small>Zarabiaj hajs</small></button>
+          <button class="action-card"><span>⚔</span><b>Pojedynek</b><small>Sprawdź rywala</small></button>
+          <button class="action-card"><span>$</span><b>Skup towarów</b><small>Sprzedaj towar</small></button>
+        </div>
+        <span class="hero__seal">TH</span>
+      </section>
+
+      <section class="news panel">
+        <header class="panel__header">
+          <h2>Aktualności</h2>
+          <a href="#">Zobacz wszystkie</a>
+        </header>
+        <div class="news-list">
+          <button class="news-item"><span class="badge badge--red">⚔</span><time>15:52</time><p><b>Stomil Hools</b> wypowiedzieli ustawkę <b>Niezależni</b></p><i>›</i></button>
+          <button class="news-item"><span class="badge badge--dark">☠</span><time>15:41</time><p><b>Stomil Hools</b> wygrali ustawkę z <b>Totalna Zagłada</b></p><i>›</i></button>
+          <button class="news-item"><span class="badge badge--blue">✦</span><time>15:26</time><p>Najlepsi wygrali ustawkę z <b>Stomil Hools</b></p><i>›</i></button>
+          <button class="news-item"><span class="badge badge--gold">🏆</span><time>15:14</time><p>Zdobyłeś osiągnięcie: <b>Żelazna Pięść</b></p><i>›</i></button>
+          <button class="news-item"><span class="badge">♨</span><time>15:08</time><p>Otrzymałeś dywidendę z inwestycji <b>Dzielnica Przemysłowa</b></p><i>›</i></button>
+        </div>
+        <button class="show-more">Pokaż więcej⌄</button>
+      </section>
+
+      <section class="career panel card-image">
+        <header class="panel__title-row"><h2>⚑ Kariera</h2></header>
+        <small>Rozdział 19</small>
+        <h3>Cmentarz słonia</h3>
+        <p>Przejmij kontrolę nad południowymi dzielnicami i zbuduj swoją legendę.</p>
+        <div class="progress-line"><span style="width:68%"></span><b>68%</b></div>
+        <button class="outline-btn">Kontynuuj karierę</button>
+      </section>
+
+      <section class="production panel">
+        <header class="panel__title-row">
+          <h2>♟ Produkcja</h2>
+          <strong>Aktywne 4/5</strong>
+        </header>
+        <p class="income-label">Łączny dochód</p>
+        <h3 class="money">$ 582,737 <span>/ godz.</span></h3>
+        <div class="factory-list">
+          <div class="factory-row"><span>▦</span><p>Dzielnica Przemysłowa</p><div class="bar mini"><span style="width:78%"></span></div><b>$ 220,000 / godz.</b></div>
+          <div class="factory-row"><span>♜</span><p>Wytwórnia</p><div class="bar mini"><span style="width:62%"></span></div><b>$ 152,500 / godz.</b></div>
+          <div class="factory-row"><span>⚕</span><p>Laboratorium</p><div class="bar mini"><span style="width:49%"></span></div><b>$ 110,000 / godz.</b></div>
+          <div class="factory-row"><span>▤</span><p>Magazyn Centralny</p><div class="bar mini"><span style="width:43%"></span></div><b>$ 100,237 / godz.</b></div>
+        </div>
+        <button class="outline-btn wide">Zarządzaj inwestycjami</button>
+      </section>
+
+      <section class="pvp panel">
+        <header class="panel__title-row"><h2>⚔ PVP</h2></header>
+        <p class="muted">Ostatni pojedynek</p>
+        <div class="duel">
+          <div class="duel__side"><span class="team-logo">TH</span><b>Patryk718</b></div>
+          <strong class="versus">VS</strong>
+          <div class="duel__side"><b>Stomil Hools</b><span class="team-logo team-logo--blue">SH</span></div>
+        </div>
+        <div class="pvp__result"><b>Wygrana</b><time>15.06.2026 15:41</time></div>
+        <p>Zdobyte hajsy: <b class="green">$ 1,250,000</b></p>
+        <p>Zdobyte punkty: <b class="green">+25</b></p>
+        <button class="outline-btn wide">Zaatakuj rywala</button>
+      </section>
+
+      <section class="ranking panel">
+        <header class="panel__title-row"><h2>⚐ Ranking klubowy</h2></header>
+        <div class="ranking__grid">
+          <div class="rank-position"><small>Twoja pozycja</small><strong>3</strong><span>14,256 pkt</span></div>
+          <ol class="rank-list">
+            <li><span>Motor Lublin</span><b>28,540</b></li>
+            <li><span>Iskra Białogard</span><b>18,932</b></li>
+            <li class="is-me"><span>Lech Poznań (Ty)</span><b>14,256</b></li>
+            <li><span>Centurioni</span><b>12,884</b></li>
+            <li><span>Awanturnicy</span><b>11,203</b></li>
+          </ol>
+        </div>
+        <button class="outline-btn wide">Zobacz pełny ranking</button>
+      </section>
+
+      <section class="event panel panel--event">
+        <small>Wydarzenie</small>
+        <h2>Wojna o dzielnice</h2>
+        <p>Kończy się za:</p>
+        <strong class="timer" data-countdown="9918">02:45:18</strong>
+        <button class="outline-btn wide">Zobacz wydarzenie</button>
+      </section>
+
+      <section class="collection panel">
+        <header class="panel__title-row"><h2>Kolekcja</h2></header>
+        <p>Odznaki <b>68</b> / 116</p>
+        <div class="medals">
+          <span>☠</span><span>☣</span><span>✊</span><span>🦅</span>
+        </div>
+        <button class="outline-btn wide">Zobacz kolekcję</button>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>© 2026 TheHools 2.0</span>
+      <span>|</span>
+      <a href="#">Pomoc</a>
+      <a href="#">Regulamin</a>
+      <a href="#">Polityka prywatności</a>
+      <a href="#">Kontakt</a>
+      <span class="socials">◖ ● ✕</span>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

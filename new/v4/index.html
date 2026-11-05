@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TheHools 2.0 — dashboard template</title>
+  <meta name="description" content="Statyczny szablon HTML/CSS/JS pocięty na podstawie dostarczonego dashboardu gry TheHools 2.0.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="TheHools 2.0">
+        <img src="img/logo.png" alt="TheHools 2.0">
+      </a>
+
+      <nav class="top-nav" aria-label="Nawigacja główna">
+        <a class="nav-link is-active" href="#start" data-section="start"><img src="img/icons/home.svg" alt="">Start</a>
+        <a class="nav-link" href="#profil" data-section="profil"><img src="img/icons/profile.svg" alt="">Profil</a>
+        <a class="nav-link" href="#ranking" data-section="ranking"><img src="img/icons/ranking.svg" alt="">Ranking</a>
+        <a class="nav-link" href="#spolecznosc" data-section="spolecznosc"><img src="img/icons/community.svg" alt="">Społeczność</a>
+        <a class="nav-link" href="#ustawienia" data-section="ustawienia"><img src="img/icons/settings.svg" alt="">Ustawienia</a>
+      </nav>
+
+      <a class="logout" href="#logout"><img src="img/icons/logout.svg" alt="">Wyloguj</a>
+    </header>
+
+    <section class="player-strip" aria-label="Status gracza">
+      <div class="profile-card">
+        <img class="avatar" src="img/avatar.png" alt="Avatar gracza Patryk718">
+        <div>
+          <strong>Patryk718</strong>
+          <span>Lech Poznań</span>
+          <small><img src="img/icons/badge.svg" alt=""> Szef</small>
+        </div>
+      </div>
+
+      <div class="level-card stat-card">
+        <div class="emblem">105</div>
+        <div class="stat-body">
+          <span>Poziom</span>
+          <strong>105</strong>
+          <div class="progress"><i style="width:67%"></i></div>
+          <small><b>30,121</b> / 45,000 XP</small>
+        </div>
+      </div>
+
+      <div class="stat-card compact achievements">
+        <span>Osiągnięcia</span>
+        <strong>45 <em>/ 116</em></strong>
+        <div class="progress yellow"><i style="width:38%"></i></div>
+      </div>
+
+      <div class="stat-card compact money">
+        <img src="img/icons/cash.svg" alt="">
+        <span>Hajs</span>
+        <strong>$ 3,802,500</strong>
+        <small>582,737 / godz.</small>
+      </div>
+
+      <div class="stat-card compact energy" data-energy="2885" data-max="2885">
+        <img src="img/icons/bolt.svg" alt="">
+        <span>Energia</span>
+        <strong><b id="energyValue">2885</b> / 2885</strong>
+        <div class="progress blue"><i id="energyBar" style="width:100%"></i></div>
+      </div>
+
+      <div class="stat-card compact health">
+        <img src="img/icons/heart.svg" alt="">
+        <span>Zdrowie</span>
+        <strong>100 <em>/ 100</em></strong>
+        <div class="progress red"><i style="width:100%"></i></div>
+      </div>
+    </section>
+
+    <div class="page-grid">
+      <aside class="sidebar" aria-label="Menu boczne">
+        <a href="#kariera" class="side-link is-active"><img src="img/icons/flag.svg" alt="">Kariera</a>
+        <a href="#pojedynek" class="side-link"><img src="img/icons/swords.svg" alt="">Pojedynek</a>
+        <a href="#zlecenia" class="side-link"><img src="img/icons/briefcase.svg" alt="">Zlecenia</a>
+        <a href="#ekipa" class="side-link"><img src="img/icons/team.svg" alt="">Twoja ekipa</a>
+        <a href="#osiagniecia" class="side-link"><img src="img/icons/trophy.svg" alt="">Osiągnięcia</a>
+        <a href="#inwestycje" class="side-link"><img src="img/icons/invest.svg" alt="">Inwestycje</a>
+        <a href="#narkotyki" class="side-link"><img src="img/icons/leaf.svg" alt="">Narkotyki</a>
+        <a href="#zbrojownia" class="side-link"><img src="img/icons/pistol.svg" alt="">Zbrojownia</a>
+        <a href="#towary" class="side-link"><img src="img/icons/box.svg" alt="">Skup towarów</a>
+        <a href="#skarbiec" class="side-link"><img src="img/icons/vault.svg" alt="">Skarbiec</a>
+        <div class="graffiti" aria-hidden="true">loyalty<br>honor<br>respect</div>
+      </aside>
+
+      <main class="dashboard" id="start">
+        <section class="hero panel">
+          <div class="hero-content">
+            <img class="small-badge" src="img/badge-th.png" alt="Odznaka TheHools">
+            <p class="eyebrow">Witaj ponownie, Patryk718!</p>
+            <h1>Utrzymuj wpływy. Buduj siłę. Rządź dzielnicą.</h1>
+            <div class="quick-actions">
+              <button class="action-btn primary" id="trainBtn"><img src="img/icons/bolt.svg" alt="">Trenuj <span>Odzyskaj energię</span></button>
+              <button class="action-btn"><img src="img/icons/briefcase.svg" alt="">Zlecenia <span>Zarabiaj hajs</span></button>
+              <button class="action-btn"><img src="img/icons/swords.svg" alt="">Pojedynek <span>Sprawdź rywala</span></button>
+              <button class="action-btn"><img src="img/icons/cash.svg" alt="">Skup towarów <span>Sprzedaj towar</span></button>
+            </div>
+          </div>
+        </section>
+
+        <section class="news panel">
+          <div class="section-title">
+            <h2>Aktualności</h2>
+            <button class="link-btn" id="showAllNews">Zobacz wszystkie</button>
+          </div>
+          <ul class="news-list">
+            <li><img src="img/crest-red.png" alt=""><time>15:52</time><span>Stomil Hools wypowiedzieli ustawkę <b>Niezależni</b></span></li>
+            <li><img src="img/crest-red.png" alt=""><time>15:41</time><span>Stomil Hools wygrali ustawkę z <b>Totalna Zagłada</b></span></li>
+            <li><img src="img/crest-blue.png" alt=""><time>15:26</time><span>Najlepsi wygrali ustawkę z <b>Stomil Hools</b></span></li>
+            <li><img src="img/icons/trophy.svg" alt=""><time>15:14</time><span>Zdobyłeś osiągnięcie: <b>Żelazna Pięść</b></span></li>
+            <li class="is-extra"><img src="img/icons/cash.svg" alt=""><time>15:08</time><span>Otrzymałeś dywidendę z inwestycji Dzielnica Przemysłowa</span></li>
+            <li class="is-extra"><img src="img/icons/team.svg" alt=""><time>14:57</time><span>Twoja ekipa awansowała w rankingu klubowym</span></li>
+          </ul>
+          <button class="more-news" id="toggleNews">Pokaż więcej</button>
+        </section>
+
+        <section class="panel career-card" id="kariera">
+          <div class="section-title left-icon"><img src="img/icons/flag.svg" alt=""><h2>Kariera</h2></div>
+          <span class="chapter">Rozdział 19</span>
+          <h3>Cmentarz słonia</h3>
+          <p>Przejmij kontrolę nad południowymi dzielnicami i zbuduj swoją legendę.</p>
+          <div class="progress orange"><i style="width:68%"></i></div>
+          <span class="percent">68%</span>
+          <button class="outline-btn">Kontynuuj karierę</button>
+        </section>
+
+        <section class="panel production-card" id="inwestycje">
+          <div class="section-title left-icon">
+            <img src="img/icons/crew.svg" alt=""><h2>Produkcja</h2><span class="status">Aktywne 4/5</span>
+          </div>
+          <p class="muted">Łączny dochód</p>
+          <strong class="income">$ 582,737 <small>/ godz.</small></strong>
+          <div class="income-bars">
+            <label><span>Dzielnica Przemysłowa</span><b>$ 220,000 / godz.</b><i style="width:78%"></i></label>
+            <label><span>Wytwórnia</span><b>$ 152,500 / godz.</b><i style="width:63%"></i></label>
+            <label><span>Laboratorium</span><b>$ 110,000 / godz.</b><i style="width:50%"></i></label>
+            <label><span>Magazyn Centralny</span><b>$ 100,237 / godz.</b><i style="width:45%"></i></label>
+          </div>
+          <button class="outline-btn wide">Zarządzaj inwestycjami</button>
+        </section>
+
+        <section class="panel pvp-card" id="pojedynek">
+          <div class="section-title left-icon"><img src="img/icons/swords.svg" alt=""><h2>PVP</h2></div>
+          <span class="muted">Ostatni pojedynek</span>
+          <div class="versus">
+            <span><img src="img/badge-th.png" alt="">Patryk718</span>
+            <strong>VS</strong>
+            <span>Stomil Hools<img src="img/crest-blue.png" alt=""></span>
+          </div>
+          <div class="result-row"><b>Wygrana</b><time>15.06.2026 15:41</time></div>
+          <p>Zdobyte hajsy: <strong>$ 1,250,000</strong><br>Zdobyte punkty: <strong>+25</strong></p>
+          <button class="outline-btn danger" id="attackBtn">Zaatakuj rywala</button>
+        </section>
+
+        <section class="panel ranking-card" id="ranking">
+          <div class="section-title left-icon"><img src="img/icons/ranking.svg" alt=""><h2>Ranking klubowy</h2></div>
+          <div class="rank-layout">
+            <div class="rank-pos"><span>Twoja pozycja</span><strong>3</strong><small>14,256 pkt</small></div>
+            <ol>
+              <li><span>Motor Lublin</span><b>28,540</b></li>
+              <li><span>Iskra Białogard</span><b>18,932</b></li>
+              <li class="you"><span>Lech Poznań (Ty)</span><b>14,256</b></li>
+              <li><span>Centurioni</span><b>12,884</b></li>
+              <li><span>Awanturnicy</span><b>11,203</b></li>
+            </ol>
+          </div>
+          <button class="outline-btn wide">Zobacz pełny ranking</button>
+        </section>
+
+        <section class="panel event-card">
+          <span class="eyebrow small">Wydarzenie</span>
+          <h2>Wojna o dzielnice</h2>
+          <span class="muted">Kończy się za:</span>
+          <strong class="timer" id="eventTimer">02:45:18</strong>
+          <button class="outline-btn wide">Zobacz wydarzenie</button>
+        </section>
+
+        <section class="panel collection-card">
+          <div class="section-title"><h2>Kolekcja</h2></div>
+          <span class="muted">Odznaki</span>
+          <strong class="collection-count">68 <small>/ 116</small></strong>
+          <div class="badges">
+            <img src="img/badge-th.png" alt="">
+            <img src="img/crest-red.png" alt="">
+            <img src="img/icons/trophy.svg" alt="">
+            <img src="img/crest-blue.png" alt="">
+          </div>
+          <button class="outline-btn wide">Zobacz kolekcję</button>
+        </section>
+      </main>
+    </div>
+
+    <footer class="footer">
+      <span>© 2026 TheHools 2.0</span>
+      <nav>
+        <a href="#pomoc">Pomoc</a>
+        <a href="#regulamin">Regulamin</a>
+        <a href="#polityka">Polityka prywatności</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="js/app.js"></script>
+</body>
+</html>

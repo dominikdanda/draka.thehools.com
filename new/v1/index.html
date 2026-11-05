@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Hools 2.0 – Mockup GUI</title>
+  <style>
+    :root {
+      --bg: #0a0b0d;
+      --bg-2: #111317;
+      --panel: rgba(18, 20, 24, 0.92);
+      --panel-2: rgba(26, 29, 35, 0.96);
+      --panel-3: rgba(15, 17, 20, 0.94);
+      --line: rgba(255, 255, 255, 0.08);
+      --line-strong: rgba(255, 140, 0, 0.28);
+      --text: #f2f2f2;
+      --muted: #a8adb8;
+      --accent: #f47c20;
+      --accent-2: #ff9c3d;
+      --green: #80c341;
+      --red: #f05b56;
+      --gold: #d6a14b;
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max-width: 1320px;
+      --sidebar-width: 250px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background:
+        radial-gradient(circle at top left, rgba(255, 90, 0, 0.12), transparent 24%),
+        radial-gradient(circle at 85% 18%, rgba(255, 120, 0, 0.08), transparent 18%),
+        linear-gradient(180deg, #0c0d10 0%, #090a0c 100%);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100%;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,0.03), transparent 30%),
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/></filter><rect width="160" height="160" filter="url(%23n)" opacity="0.055"/></svg>');
+      pointer-events: none;
+      mix-blend-mode: screen;
+      opacity: .45;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+
+    .app {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      min-height: 100vh;
+      padding: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .sidebar {
+      display: none;
+      background: linear-gradient(180deg, rgba(14,16,20,0.96), rgba(10,12,16,0.96));
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: sticky;
+      top: 18px;
+      height: calc(100vh - 36px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 22px 20px 18px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), transparent);
+    }
+
+    .brand-mark {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle at 30% 20%, #3a3d43 0%, #14171c 60%);
+      border: 1px solid rgba(255,255,255,.08);
+      color: var(--accent-2);
+      font-weight: 900;
+      letter-spacing: .06em;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 1.2rem;
+      line-height: 1;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .brand small {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .side-nav {
+      padding: 14px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 14px;
+      border-radius: 14px;
+      color: #d6d8de;
+      border: 1px solid transparent;
+      transition: .2s ease;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background: linear-gradient(180deg, rgba(255, 128, 0, 0.12), rgba(255, 128, 0, 0.05));
+      border-color: var(--line-strong);
+      color: #fff;
+    }
+
+    .nav-ico {
+      width: 18px;
+      text-align: center;
+      opacity: .95;
+    }
+
+    .main {
+      display: grid;
+      gap: 18px;
+    }
+
+    .topbar {
+      background: linear-gradient(180deg, rgba(17,19,23,0.95), rgba(13,15,19,0.96));
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .topbar-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .mobile-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .menu-btn,
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .menu-btn:hover,
+    .icon-btn:hover {
+      background: rgba(255,255,255,0.06);
+    }
+
+    .logo-wrap {
+      min-width: 0;
+    }
+
+    .logo {
+      margin: 0;
+      text-transform: uppercase;
+      font-size: 1.1rem;
+      letter-spacing: .08em;
+      font-weight: 900;
+    }
+
+    .logo span { color: var(--accent); }
+
+    .sublogo {
+      display: block;
+      color: var(--muted);
+      font-size: .72rem;
+      margin-top: 4px;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .notif {
+      position: relative;
+    }
+
+    .notif::after {
+      content: attr(data-count);
+      position: absolute;
+      right: -3px;
+      top: -4px;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 4px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: var(--red);
+      color: white;
+      font-size: .68rem;
+      font-weight: 700;
+      border: 2px solid #121418;
+    }
+
+    .player-strip {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      padding: 16px;
+    }
+
+    .player-card {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .avatar {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+      background: radial-gradient(circle at 30% 20%, #383d44 0%, #16181d 55%, #0e1014 100%);
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.03);
+    }
+
+    .level-box {
+      min-width: 70px;
+      text-align: right;
+    }
+
+    .level-box .label,
+    .res .label,
+    .small-label,
+    .card-subtitle,
+    .muted {
+      color: var(--muted);
+      font-size: .74rem;
+    }
+
+    .level-box .value {
+      font-size: 1.85rem;
+      font-weight: 800;
+      line-height: 1;
+      color: var(--accent-2);
+      margin-top: 4px;
+    }
+
+    .player-meta h2 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .xp-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: .8rem;
+      margin-bottom: 7px;
+      color: #d7dae1;
+    }
+
+    .progress {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .progress > span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #cc5e14, #f48c29);
+      box-shadow: 0 0 16px rgba(244, 124, 32, 0.35);
+    }
+
+    .resources {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .res {
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line);
+      min-width: 0;
+    }
+
+    .res-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .res-icon {
+      font-size: 1rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    .money .res-icon, .money .res-value { color: var(--green); }
+    .energy .res-icon, .energy .res-value { color: #f4bf3c; }
+    .hp .res-icon, .hp .res-value { color: var(--red); }
+
+    .res-value {
+      font-size: 1rem;
+      font-weight: 800;
+      line-height: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .panel {
+      background: linear-gradient(180deg, var(--panel), var(--panel-3));
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 18px 0;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 1.05rem;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .panel-body {
+      padding: 18px;
+    }
+
+    .reward-card {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      align-items: center;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line-strong);
+      background:
+        radial-gradient(circle at right center, rgba(255, 145, 0, 0.18), transparent 32%),
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.08));
+    }
+
+    .reward-visual {
+      min-height: 130px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.05);
+      background:
+        radial-gradient(circle at 80% 70%, rgba(255, 132, 0, 0.34), transparent 24%),
+        linear-gradient(145deg, #2a231b 0%, #191714 35%, #101216 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .reward-visual::before {
+      content: "HOOLS";
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      color: rgba(255,255,255,0.22);
+      letter-spacing: .14em;
+      font-weight: 900;
+      font-size: 1.15rem;
+    }
+
+    .reward-visual::after {
+      content: "▣";
+      position: absolute;
+      left: 18px;
+      top: 18px;
+      font-size: 2.2rem;
+      color: rgba(255, 170, 84, 0.9);
+      text-shadow: 0 0 30px rgba(255, 145, 0, 0.35);
+    }
+
+    .section-title {
+      margin: 0 0 6px;
+      font-size: 1.18rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .cards-4 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .feature-card,
+    .status-card,
+    .message-card,
+    .team-card,
+    .spotlight {
+      padding: 14px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+      border: 1px solid var(--line);
+    }
+
+    .feature-card {
+      min-height: 155px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-art {
+      height: 74px;
+      border-radius: 14px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.05), transparent),
+        linear-gradient(145deg, #26282d 0%, #15171b 70%);
+      border: 1px solid rgba(255,255,255,.04);
+      margin-bottom: 12px;
+      display: grid;
+      place-items: center;
+      font-size: 1.75rem;
+    }
+
+    .feature-card h3,
+    .status-title,
+    .team-card h3,
+    .message-card h3,
+    .spotlight h3 {
+      margin: 0 0 4px;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: .03em;
+    }
+
+    .feature-card p,
+    .status-card p,
+    .team-card p,
+    .spotlight p,
+    .message-list li {
+      margin: 0;
+      color: var(--muted);
+      font-size: .86rem;
+      line-height: 1.45;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .status-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .timer {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--green);
+      line-height: 1;
+      margin: 4px 0 8px;
+    }
+
+    .bar {
+      height: 12px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.04);
+      margin-top: 12px;
+    }
+
+    .bar > span {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, #77b63f, #b2e751);
+      box-shadow: 0 0 16px rgba(128, 195, 65, 0.3);
+    }
+
+    .spotlight {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      background:
+        radial-gradient(circle at 85% 15%, rgba(255,100,0,.18), transparent 20%),
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+    }
+
+    .spotlight-art {
+      min-height: 155px;
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at 25% 35%, rgba(255,70,0,.28), transparent 24%),
+        linear-gradient(145deg, #2f1919 0%, #16181d 60%, #0f1014 100%);
+      border: 1px solid rgba(255,255,255,.05);
+    }
+
+    .reward-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: #e9edf4;
+      font-weight: 700;
+      margin: 12px 0 14px;
+      font-size: .95rem;
+    }
+
+    .reward-row .cash { color: var(--green); }
+    .reward-row .xp { color: #f4bf3c; }
+    .reward-row .crew { color: #d5d8de; }
+
+    .btn {
+      border: 0;
+      border-radius: 12px;
+      cursor: pointer;
+      padding: 12px 16px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      transition: transform .12s ease, filter .2s ease;
+    }
+
+    .btn:hover { filter: brightness(1.06); }
+    .btn:active { transform: translateY(1px); }
+
+    .btn-primary {
+      color: #1b1108;
+      background: linear-gradient(180deg, #ff9a3c, #e76d18);
+      box-shadow: 0 10px 24px rgba(231, 109, 24, 0.28);
+    }
+
+    .btn-secondary {
+      color: #f5bd84;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--line-strong);
+    }
+
+    .messages {
+      display: grid;
+      gap: 14px;
+    }
+
+    .message-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .message-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .message-list li:last-child { border-bottom: 0; padding-bottom: 0; }
+    .message-time { white-space: nowrap; color: #8f96a3; font-size: .78rem; }
+
+    .team-card {
+      display: grid;
+      gap: 14px;
+    }
+
+    .team-header {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .team-badge {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(145deg, #2a2d34 0%, #16181d 80%);
+      border: 1px solid rgba(255,255,255,.06);
+      font-size: 1.5rem;
+    }
+
+    .desktop-only { display: none; }
+
+    .bottom-nav {
+      position: sticky;
+      bottom: 12px;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      padding: 10px;
+      border-radius: 20px;
+      background: rgba(12, 14, 18, 0.94);
+      border: 1px solid rgba(255,255,255,.08);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+    }
+
+    .bottom-link {
+      padding: 10px 6px;
+      text-align: center;
+      border-radius: 14px;
+      color: var(--muted);
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      display: grid;
+      gap: 6px;
+      border: 1px solid transparent;
+    }
+
+    .bottom-link.active {
+      color: #fff;
+      background: linear-gradient(180deg, rgba(255, 128, 0, 0.11), rgba(255, 128, 0, 0.04));
+      border-color: var(--line-strong);
+    }
+
+    .bottom-link span:first-child {
+      font-size: 1.1rem;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.55);
+      opacity: 0;
+      visibility: hidden;
+      transition: .2s ease;
+      z-index: 30;
+    }
+
+    .overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .drawer {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: min(86vw, 360px);
+      background: linear-gradient(180deg, rgba(13,15,19,0.98), rgba(9,11,14,0.99));
+      border-right: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      transform: translateX(-100%);
+      transition: .25s ease;
+      z-index: 40;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .drawer.show { transform: translateX(0); }
+
+    .drawer-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .drawer-nav {
+      padding: 14px;
+      display: grid;
+      gap: 8px;
+      overflow: auto;
+    }
+
+    .drawer-foot {
+      padding: 16px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: .84rem;
+    }
+
+    @media (min-width: 760px) {
+      .reward-card,
+      .spotlight {
+        grid-template-columns: 1.15fr .85fr;
+      }
+
+      .mini-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .messages-grid {
+        display: grid;
+        grid-template-columns: 1.2fr .8fr;
+        gap: 18px;
+      }
+    }
+
+    @media (min-width: 1100px) {
+      .app { padding: 22px; }
+      .layout {
+        grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+        align-items: start;
+      }
+      .sidebar { display: block; }
+      .menu-btn { display: none; }
+      .bottom-nav { display: none; }
+      .desktop-only { display: block; }
+      .dashboard-grid {
+        grid-template-columns: minmax(0, 1.55fr) minmax(280px, .85fr);
+        align-items: start;
+      }
+      .player-strip {
+        grid-template-columns: minmax(260px, 1fr) minmax(360px, 1.25fr);
+        align-items: center;
+      }
+      .resources {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .cards-4 {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .mobile-only { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay" id="overlay"></div>
+
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-head">
+      <div>
+        <strong style="display:block;font-size:1rem;letter-spacing:.05em;text-transform:uppercase;">The Hools <span style="color:var(--accent)">2.0</span></strong>
+        <span class="small-label">Menu gracza</span>
+      </div>
+      <button class="icon-btn" id="closeDrawer" aria-label="Zamknij menu">✕</button>
+    </div>
+    <nav class="drawer-nav">
+      <a class="nav-link active" href="#"><span class="nav-ico">🏠</span> Pulpit</a>
+      <a class="nav-link" href="#"><span class="nav-ico">⚡</span> Akcje</a>
+      <a class="nav-link" href="#"><span class="nav-ico">🏚️</span> Zaplecze</a>
+      <a class="nav-link" href="#"><span class="nav-ico">🥊</span> Pojedynki</a>
+      <a class="nav-link" href="#"><span class="nav-ico">🏆</span> Ranking</a>
+      <a class="nav-link" href="#"><span class="nav-ico">👥</span> Ekipa</a>
+      <a class="nav-link" href="#"><span class="nav-ico">✉️</span> Wiadomości</a>
+      <a class="nav-link" href="#"><span class="nav-ico">⚙️</span> Ustawienia</a>
+      <a class="nav-link" href="#"><span class="nav-ico">↪</span> Wyloguj</a>
+    </nav>
+    <div class="drawer-foot">Twoja dzielnica. Twoje zasady.</div>
+  </aside>
+
+  <div class="app">
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">H</div>
+          <div>
+            <h1>The Hools <span style="color:var(--accent)">2.0</span></h1>
+            <small>Twoja dzielnica. Twoje zasady.</small>
+          </div>
+        </div>
+        <nav class="side-nav">
+          <a class="nav-link active" href="#"><span class="nav-ico">🏠</span> Pulpit</a>
+          <a class="nav-link" href="#"><span class="nav-ico">⚡</span> Akcje</a>
+          <a class="nav-link" href="#"><span class="nav-ico">🏚️</span> Zaplecze</a>
+          <a class="nav-link" href="#"><span class="nav-ico">🥊</span> Pojedynki</a>
+          <a class="nav-link" href="#"><span class="nav-ico">🏆</span> Ranking</a>
+          <a class="nav-link" href="#"><span class="nav-ico">👥</span> Ekipa</a>
+          <a class="nav-link" href="#"><span class="nav-ico">✉️</span> Wiadomości</a>
+          <a class="nav-link" href="#"><span class="nav-ico">⚙️</span> Ustawienia</a>
+          <a class="nav-link" href="#"><span class="nav-ico">↪</span> Wyloguj</a>
+        </nav>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div class="topbar-main">
+            <div class="mobile-left">
+              <button class="menu-btn mobile-only" id="openDrawer" aria-label="Otwórz menu">☰</button>
+              <div class="logo-wrap">
+                <h1 class="logo">The Hools <span>2.0</span></h1>
+                <span class="sublogo">Panel gracza / Dashboard</span>
+              </div>
+            </div>
+
+            <div class="top-actions">
+              <button class="icon-btn notif" data-count="3" aria-label="Wiadomości">✉</button>
+              <button class="icon-btn" aria-label="Powiadomienia">🔔</button>
+            </div>
+          </div>
+
+          <div class="player-strip">
+            <section class="player-card">
+              <div class="avatar">🥷</div>
+              <div class="player-meta">
+                <h2>Gracz: Dominando</h2>
+                <div class="xp-line">
+                  <span>XP 8 450 / 12 500</span>
+                  <span>Do poziomu: 4 050</span>
+                </div>
+                <div class="progress"><span style="width: 68%"></span></div>
+              </div>
+              <div class="level-box">
+                <div class="label">Poziom</div>
+                <div class="value">17</div>
+              </div>
+            </section>
+
+            <section class="resources">
+              <div class="res money">
+                <div class="res-top"><span class="res-icon">💵</span><span class="label">Gotówka</span></div>
+                <div class="res-value">5,776,532</div>
+                <div class="small-label">Gotowe do wydania</div>
+              </div>
+              <div class="res energy">
+                <div class="res-top"><span class="res-icon">⚡</span><span class="label">Energia</span></div>
+                <div class="res-value">473 / 505</div>
+                <div class="small-label">+1 za 2:45</div>
+              </div>
+              <div class="res hp">
+                <div class="res-top"><span class="res-icon">❤</span><span class="label">Zdrowie</span></div>
+                <div class="res-value">100 / 100</div>
+                <div class="small-label">Pełna gotowość</div>
+              </div>
+            </section>
+          </div>
+        </header>
+
+        <section class="dashboard-grid">
+          <div class="left-col" style="display:grid; gap:18px; min-width:0;">
+            <section class="panel">
+              <div class="panel-body">
+                <div class="reward-card">
+                  <div>
+                    <div class="small-label">Dzisiaj czeka na Ciebie</div>
+                    <h2 class="section-title">Nagroda dnia</h2>
+                    <p class="muted" style="margin:0 0 14px; line-height:1.5;">Odbierz codzienną skrzynię i zgarnij gotówkę, energię albo rzadki bonus do rozwoju.</p>
+                    <button class="btn btn-primary">Odbierz</button>
+                  </div>
+                  <div class="reward-visual"></div>
+                </div>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <h2 class="panel-title">Co robisz teraz?</h2>
+              </div>
+              <div class="panel-body">
+                <div class="cards-4">
+                  <article class="feature-card">
+                    <div>
+                      <div class="feature-art">✊</div>
+                      <h3>Akcje</h3>
+                      <p>Wykonuj zadania i zdobywaj kasę.</p>
+                    </div>
+                  </article>
+                  <article class="feature-card">
+                    <div>
+                      <div class="feature-art">🏚️</div>
+                      <h3>Zaplecze</h3>
+                      <p>Produkcja, trening i rozwój.</p>
+                    </div>
+                  </article>
+                  <article class="feature-card">
+                    <div>
+                      <div class="feature-art">🥊</div>
+                      <h3>Pojedynki</h3>
+                      <p>Walka o szacunek i wpływy.</p>
+                    </div>
+                  </article>
+                  <article class="feature-card">
+                    <div>
+                      <div class="feature-art">🏆</div>
+                      <h3>Ranking</h3>
+                      <p>Sprawdź swoją pozycję.</p>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </section>
+
+            <section class="mini-grid">
+              <article class="panel">
+                <div class="panel-header">
+                  <h2 class="panel-title">Aktywna produkcja</h2>
+                </div>
+                <div class="panel-body">
+                  <div class="status-card">
+                    <div>
+                      <div class="small-label">Sprzęt / slot 1</div>
+                      <div class="status-title">Hantel</div>
+                      <p>Produkcja sprzętu do Zaplecza.</p>
+                      <div class="timer" data-seconds="1435">23:55</div>
+                      <div class="bar"><span style="width: 42%"></span></div>
+                    </div>
+                    <button class="btn btn-secondary">Przyspiesz</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="panel desktop-only">
+                <div class="panel-header">
+                  <h2 class="panel-title">Trening w siłowni</h2>
+                </div>
+                <div class="panel-body">
+                  <div class="status-card">
+                    <div>
+                      <div class="small-label">Aktywny trening</div>
+                      <div class="status-title">Worek treningowy</div>
+                      <p>Trening siły i wytrzymałości.</p>
+                      <div class="timer" data-seconds="9252">2:34:12</div>
+                      <div class="bar"><span style="width: 61%"></span></div>
+                    </div>
+                    <button class="btn btn-secondary">Przyspiesz</button>
+                  </div>
+                </div>
+              </article>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <h2 class="panel-title">Polecana akcja</h2>
+              </div>
+              <div class="panel-body">
+                <article class="spotlight">
+                  <div class="spotlight-art"></div>
+                  <div>
+                    <div class="small-label">Akcja specjalna dnia</div>
+                    <h3>Zbierz haracz na osiedlu</h3>
+                    <p>Pokaż, kto tu rządzi i zgarnij należny szacunek. Akcja daje szybki zysk, ale może przyciągnąć uwagę rywali.</p>
+                    <div class="reward-row">
+                      <span class="cash">💵 7,500</span>
+                      <span class="xp">XP 120</span>
+                      <span class="crew">👥 25</span>
+                    </div>
+                    <button class="btn btn-primary">Rozpocznij akcję</button>
+                  </div>
+                </article>
+              </div>
+            </section>
+          </div>
+
+          <div class="right-col" style="display:grid; gap:18px; min-width:0;">
+            <section class="panel mobile-only">
+              <div class="panel-header">
+                <h2 class="panel-title">Trening w siłowni</h2>
+              </div>
+              <div class="panel-body">
+                <div class="status-card">
+                  <div>
+                    <div class="small-label">Aktywny trening</div>
+                    <div class="status-title">Worek treningowy</div>
+                    <p>Trening siły i wytrzymałości.</p>
+                    <div class="timer" data-seconds="9252">2:34:12</div>
+                    <div class="bar"><span style="width: 61%"></span></div>
+                  </div>
+                  <button class="btn btn-secondary">Przyspiesz</button>
+                </div>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <h2 class="panel-title">Twoja pozycja</h2>
+              </div>
+              <div class="panel-body">
+                <article class="feature-card" style="min-height:auto;">
+                  <div>
+                    <div class="feature-art">🏅</div>
+                    <h3>#128</h3>
+                    <p>125,430 pkt wpływów</p>
+                  </div>
+                  <button class="btn btn-secondary">Zobacz ranking</button>
+                </article>
+              </div>
+            </section>
+
+            <section class="panel messages-grid">
+              <div class="message-card panel-body" style="padding-top:18px;">
+                <h3>Ostatnie wiadomości</h3>
+                <ul class="message-list">
+                  <li><span>Awanturnicy przejęli dzielnicę CENTURIONI</span><span class="message-time">17 min temu</span></li>
+                  <li><span>Dominando wygrał pojedynek z Awanturnicy</span><span class="message-time">45 min temu</span></li>
+                  <li><span>Nowa dostawa sprzętu w Zapleczu</span><span class="message-time">1 godz. temu</span></li>
+                </ul>
+                <div style="margin-top:14px;"><button class="btn btn-secondary">Zobacz wszystkie</button></div>
+              </div>
+
+              <div class="team-card panel-body" style="padding-top:18px;">
+                <h3>Ekipa</h3>
+                <div class="team-header">
+                  <div class="team-badge">☠</div>
+                  <div>
+                    <strong style="display:block; margin-bottom:3px;">HOOLS F.C.</strong>
+                    <p>Poziom ekipy: 23<br>Członkowie: 18 / 25</p>
+                  </div>
+                </div>
+                <button class="btn btn-primary">Zarządzaj ekipą</button>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <nav class="bottom-nav mobile-only" aria-label="Nawigacja dolna">
+          <a href="#" class="bottom-link active"><span>🏠</span><span>Start</span></a>
+          <a href="#" class="bottom-link"><span>⚡</span><span>Akcje</span></a>
+          <a href="#" class="bottom-link"><span>🏚️</span><span>Zaplecze</span></a>
+          <a href="#" class="bottom-link"><span>🥊</span><span>Walka</span></a>
+          <a href="#" class="bottom-link"><span>👤</span><span>Profil</span></a>
+        </nav>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const openDrawerBtn = document.getElementById('openDrawer');
+    const closeDrawerBtn = document.getElementById('closeDrawer');
+    const drawer = document.getElementById('drawer');
+    const overlay = document.getElementById('overlay');
+
+    function openDrawer() {
+      drawer.classList.add('show');
+      overlay.classList.add('show');
+      drawer.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+      drawer.classList.remove('show');
+      overlay.classList.remove('show');
+      drawer.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    if (openDrawerBtn) openDrawerBtn.addEventListener('click', openDrawer);
+    if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeDrawer);
+    if (overlay) overlay.addEventListener('click', closeDrawer);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeDrawer();
+    });
+
+    function formatTime(totalSeconds) {
+      const sec = Math.max(0, Number(totalSeconds) || 0);
+      const hours = Math.floor(sec / 3600);
+      const minutes = Math.floor((sec % 3600) / 60);
+      const seconds = sec % 60;
+      if (hours > 0) {
+        return [hours, minutes, seconds].map((v, i) => i === 0 ? String(v) : String(v).padStart(2, '0')).join(':');
+      }
+      return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
+
+    const timers = [...document.querySelectorAll('.timer[data-seconds]')];
+    timers.forEach(el => {
+      let seconds = Number(el.dataset.seconds);
+      el.textContent = formatTime(seconds);
+      setInterval(() => {
+        if (seconds > 0) seconds -= 1;
+        el.textContent = formatTime(seconds);
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

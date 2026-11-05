@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototypy - The Hools 2.0</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #111;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page {
+            width: 100%;
+            max-width: 1325px;
+            padding: 30px 15px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        h1 {
+            margin: 0 0 25px;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .prototypes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, 225px);
+            justify-content: center;
+            gap: 24px 20px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .prototype-link {
+            display: block;
+            width: 225px;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .prototype-link img {
+            display: block;
+            width: 225px;
+            height: 170px;
+            object-fit: cover;
+            border: 2px solid #333;
+            border-radius: 8px;
+            background: #222;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .prototype-link span {
+            display: block;
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .prototype-link:hover img,
+        .prototype-link:focus-visible img {
+            transform: translateY(-4px);
+            border-color: #ff7a1a;
+            box-shadow: 0 10px 25px rgba(255, 122, 26, 0.25);
+        }
+
+        .prototype-link:focus-visible {
+            outline: 2px solid #ff7a1a;
+            outline-offset: 6px;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 540px) {
+            body {
+                align-items: flex-start;
+            }
+
+            .page {
+                padding-top: 24px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+
+        .vote-section {
+            max-width: 820px;
+            margin: 45px auto 0;
+            padding: 24px;
+            background: #181818;
+            border: 1px solid #333;
+            border-radius: 14px;
+            text-align: center;
+        }
+
+        .vote-section h2 {
+            margin: 0 0 12px;
+            font-size: 24px;
+        }
+
+        .vote-section p {
+            max-width: 620px;
+            margin: 0 auto 22px;
+            color: #bbb;
+            line-height: 1.5;
+        }
+
+        .form-wrapper {
+            overflow: hidden;
+            border-radius: 12px;
+            background: #fff;
+            border: 1px solid #333;
+        }
+
+        .form-link {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 12px 18px;
+            border-radius: 999px;
+            background: #ff7a1a;
+            color: #111;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .form-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 122, 26, 0.25);
+        }
+    </style>
+</head>
+<body>
+
+<main class="page">
+    <h1>Wybierz wersję prototypu</h1>
+
+    <section class="prototypes" aria-label="Lista prototypów">
+        <a class="prototype-link" href="v0.jpg">
+            <img src="v0.jpg" alt="Obecna wersja">
+            <span>Obecna wersja</span>
+        </a>
+
+        <a class="prototype-link" href="./v1">
+            <img src="v1.jpg" alt="Prototyp v.1">
+            <span>Prototyp v.1</span>
+        </a>
+
+        <a class="prototype-link" href="./v2">
+            <img src="v2.jpg" alt="Prototyp v.2">
+            <span>Prototyp v.2</span>
+        </a>
+
+        <a class="prototype-link" href="./v3">
+            <img src="v3.jpg" alt="Prototyp v.3">
+            <span>Prototyp v.3</span>
+        </a>
+
+        <a class="prototype-link" href="./v4">
+            <img src="v4.jpg" alt="Prototyp v.4">
+            <span>Prototyp v.4</span>
+        </a>
+
+        <a class="prototype-link" href="./v5">
+            <img src="v5.jpg" alt="Prototyp v.5">
+            <span>Prototyp v.5</span>
+        </a>
+    </section>
+
+    <section class="vote-section">
+        <h2>Zagłosuj na najlepszy szablon</h2>
+        <p>
+            Sprawdź wszystkie wersje prototypu, a potem wybierz tę,
+            która Twoim zdaniem najlepiej pasuje do The Hools 2.0.
+            Możesz też dopisać własną opinię.
+        </p>
+
+        <div class="form-wrapper">
+            <iframe
+                src="https://forms.gle/bfMPBoks8HbHWK1Y7"
+                width="100%"
+                height="720"
+                frameborder="0"
+                marginheight="0"
+                marginwidth="0">
+                Ładuję…
+            </iframe>
+        </div>
+
+        <a class="form-link" href="https://forms.gle/bfMPBoks8HbHWK1Y7" target="_blank">
+            Otwórz formularz w nowej karcie
+        </a>
+    </section>
+</main>
+
+</body>
+</html>
