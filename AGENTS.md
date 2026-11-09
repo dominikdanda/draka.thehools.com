@@ -4,7 +4,12 @@
 
 Implement complete features from their specification, with regression tests. Report results in Polish.
 Never change economy or gameplay incidentally. Clarify materially different game-design outcomes.
-Never deploy automatically, weaken authentication/payment/security boundaries, or touch real databases.
+Never deploy from a workstation, weaken authentication/payment/security boundaries, or touch real databases.
+After the owner approves and activates the mechanism in `docs/deployment.md`, ordinary changes may
+use GitHub native auto-merge and CI-gated production deployment. Never bypass required checks,
+reviews or environments. The initial automation PR for Issue #3 must not be auto-merged or deployed.
+Destructive migrations, login/authentication, authorization, economy and data deletion always need
+the owner's explicit approval for the current change. Do not infer that approval from green CI.
 Read `docs/development.md` before running setup, tests or database commands.
 Do not read or print `.env` credentials. Do not use `composer setup`, migrate, seed, migrate:fresh,
 or legacy export commands against the developer's configured database.
@@ -76,7 +81,11 @@ by SQLite CI. No production database, credentials or deployment procedure is req
    unrelated code. Update documentation and include migrations when the feature needs them.
 6. Review the diff for secrets, unrelated changes and gameplay/economy drift. Commit only owned
    changes using explicit paths. Push and open a PR when authentication/tools permit; never
-   invent a link, successful run or approval. Do not merge or deploy automatically.
+   invent a link, successful run or approval. Classify risk in the PR. For ordinary changes only,
+   after the owner has activated the mechanism, enable native auto-merge subject to main's rules.
+   Sensitive changes require owner approval at the current revision; CODEOWNERS deliberately
+   requires review for all paths except ordinary docs and stylesheets. Do not relax these rules
+   yourself, approve your own PR, call a direct merge API or invoke SSH deployment manually.
 7. Report in Polish: behavior, tests/results, manual verification, limitations, branch, commits,
    PR and actual CI status. Distinguish local results from a GitHub Actions run.
 

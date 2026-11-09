@@ -1,39 +1,50 @@
 name: Deploy Draka
 
+# Called only by CI after both suites and the strict gate succeed.
+# Secrets belong exclusively to the protected production environment.
 on:
-  push:
-    branches:
-      - main
+  workflow_call:
+    inputs:
+      sha:
+        required: true
+        type: string
 
 permissions:
   contents: read
 
-concurrency:
-  group: draka-production
-  cancel-in-progress: false
-
 jobs:
   deploy:
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && inputs.sha == github.sha && vars.DRAKA_DEPLOY_ENABLED == 'true' }}
     runs-on: ubuntu-latest
-
+    timeout-minutes: 15
+    environment: production
+    concurrency:
+      group: draka-production
+      cancel-in-progress: false
     steps:
-      - name: Configure SSH
+      - name: Deploy the tested commit using the restricted SSH contract
+        shell: bash
         env:
+          DEPLOY_SHA: ${{ inputs.sha }}
           SSH_PRIVATE_KEY: ${{ secrets.DRAKA_SSH_PRIVATE_KEY }}
           SSH_HOST: ${{ secrets.DRAKA_SSH_HOST }}
           SSH_HOST_KEY: ${{ secrets.DRAKA_SSH_HOST_KEY }}
         run: |
+          set -euo pipefail
+          [[ "$DEPLOY_SHA" =~ ^[0-9a-f]{40}$ ]]
+          test -n "$SSH_PRIVATE_KEY"
+          test -n "$SSH_HOST_KEY"
+          [[ "$SSH_HOST" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]*$ ]]
           install -m 700 -d ~/.ssh
+          trap 'rm -f ~/.ssh/id_ed25519' EXIT
+          umask 077
           printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
           printf '%s\n' "$SSH_HOST_KEY" > ~/.ssh/known_hosts
-          chmod 600 ~/.ssh/known_hosts
-
-      - name: Deploy
-        env:
-          SSH_HOST: ${{ secrets.DRAKA_SSH_HOST }}
-        run: |
-          ssh -o BatchMode=yes \
-            -o StrictHostKeyChecking=yes \
-            -i ~/.ssh/id_ed25519 \
-            draka-deploy@"$SSH_HOST" deploy
+          printf 'Deploying tested SHA %s; CI run %s; attempt %s\n' "$DEPLOY_SHA" "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT"
+          receipt=$(ssh -T -o BatchMode=yes \
+            -o StrictHostKeyChecking=yes -o ConnectTimeout=15 \
+            -o IdentitiesOnly=yes -i ~/.ssh/id_ed25519 \
+            draka-deploy@"$SSH_HOST" "deploy $DEPLOY_SHA")
+          test "$receipt" = "deployed $DEPLOY_SHA"
+          printf 'Deployed `%s` from CI run `%s`, attempt `%s`.\n' \
+            "$DEPLOY_SHA" "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" >> "$GITHUB_STEP_SUMMARY"

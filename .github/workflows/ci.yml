@@ -4,6 +4,7 @@ on:
   push:
     branches: [main, 'feature/**', 'fix/**', 'chore/**']
   pull_request:
+  merge_group:
   workflow_dispatch:
 
 permissions:
@@ -11,7 +12,8 @@ permissions:
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  # Never interrupt an active production deployment with a newer main push.
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   php:
@@ -50,7 +52,7 @@ jobs:
           test ! -f .env.testing
           test ! -f bootstrap/cache/config.php
           test ! -d public/mysql-8.4
-      - run: composer test
+      - run: composer test -- --fail-on-skipped --fail-on-incomplete --fail-on-risky
       - name: PHP syntax
         run: find app bootstrap config database routes tests -name '*.php' -not -path 'bootstrap/cache/*' -print0 | xargs -0 -n1 php -l
       - name: Infrastructure formatting
@@ -76,3 +78,28 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
+
+  gate:
+    name: CI gate
+    if: ${{ always() }}
+    needs: [php, javascript]
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/ci-gate.cjs
+      - name: Require every suite to succeed
+        env:
+          NEEDS_JSON: ${{ toJSON(needs) }}
+        run: node scripts/ci-gate.cjs
+
+  deploy:
+    needs: [php, javascript, gate]
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.DRAKA_DEPLOY_ENABLED == 'true' }}
+    uses: ./.github/workflows/deploy.yml
+    with:
+      sha: ${{ github.sha }}

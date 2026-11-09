@@ -13,7 +13,7 @@ Composer's normal setup script migrates the configured database: do not use it a
 | Full PHP suite | `composer test` |
 | Specific PHP regression | `composer test -- --filter=TestDatabaseIsolationTest` |
 | Direct PHP runner | `php vendor/phpunit/phpunit/phpunit` |
-| Existing browser-script tests | `npm test` |
+| JavaScript tests (reject failures, skips, cancellations and todo) | `npm test` |
 | Asset build | `npm run build` |
 | Vite development server | `npm run dev` |
 | PHP formatting check (application directories) | `composer lint` |
@@ -38,10 +38,10 @@ The isolation regression checks connection configuration and separation by execu
 Never add raw PDO, remote HTTP calls or real credentials to tests. This is application-level
 isolation, not a sandbox for malicious test code.
 
-CI uses ephemeral GitHub-hosted runners, no database service, no environment/production secrets,
-no deployment steps and a read-only GitHub token. Checkout excludes tracked live MySQL files and
+CI test jobs use ephemeral GitHub-hosted runners, no database service, no environment/production
+secrets and a read-only GitHub token. Checkout excludes tracked live MySQL files and
 legacy reference content. Composer installs with `--no-scripts`; tests bootstrap the app themselves.
-Do not change this workflow to `pull_request_target`, attach a production environment, inject
+Do not change test jobs to `pull_request_target`, attach a production environment, inject
 database secrets, or switch to a runner with production network access.
 SQLite verifies behavior but not MySQL row locking/collations; any future MySQL test job must use
 an ephemeral service with synthetic fixtures and disposable credentials, never a shared server.
@@ -84,10 +84,12 @@ Draft PR: https://github.com/dominikdanda/TheHools-Laravel/pull/1
 
 ## Human setup and verification
 
-Enable GitHub Actions if repository/organization policy disables them. After the first actual
-successful run, protect `main` with required `PHP tests` and `JavaScript tests and build` checks
-and human review. Configure contributor push/PR credentials outside this repository. No
-production secrets are needed. Require approval separately for deployment; CI never deploys.
+Enable GitHub Actions if repository/organization policy disables them. Protect `main` with required
+`PHP tests`, `JavaScript tests and build` and `CI gate` checks, strict up-to-date branches (or merge
+queue), and code-owner review as described in [deployment.md](deployment.md). Configure contributor
+push/PR credentials outside this repository. Test jobs never need production secrets. A separate
+reusable production job may run only after successful push CI for the same main SHA and owner
+activation. Keep it disabled while reviewing the initial automation PR.
 Do not claim remote automation works until its run for the exact commit has been inspected.
 
 To verify locally: run the commands above, inspect the isolation regression, and confirm both
