@@ -41,6 +41,10 @@ test('actual Node suites reject skipped, todo, failed tests and missing suites',
 
 test('CI binds deployment to tested push SHA after an unconditional strict gate', () => {
     const ci = fs.readFileSync('.github/workflows/ci.yml', 'utf8');
+    const prepare = ci.indexOf('run: php scripts/prepare-ci.php');
+    assert.ok(prepare > ci.indexOf('uses: shivammathur/setup-php@v2'));
+    assert.ok(prepare < ci.indexOf('run: composer install'));
+    assert.match(ci, /APP_ENV: testing/);
     assert.match(ci, /merge_group:/);
     assert.match(ci, /cancel-in-progress: \$\{\{ github.ref != 'refs\/heads\/main' \}\}/);
     assert.match(ci, /name: CI gate\s+if: \$\{\{ always\(\) \}\}\s+needs: \[php, javascript\]/);

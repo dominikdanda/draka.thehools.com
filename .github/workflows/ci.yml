@@ -44,6 +44,8 @@ jobs:
           extensions: mbstring, pdo_sqlite, sqlite3, dom, xml
           coverage: none
           tools: composer:v2
+      - name: Prepare Laravel runtime directories
+        run: php scripts/prepare-ci.php
       - run: composer validate --strict
       - run: composer install --no-interaction --prefer-dist --no-progress --no-scripts
       - name: Reject local environment and cached configuration
@@ -56,7 +58,7 @@ jobs:
       - name: PHP syntax
         run: find app bootstrap config database routes tests -name '*.php' -not -path 'bootstrap/cache/*' -print0 | xargs -0 -n1 php -l
       - name: Infrastructure formatting
-        run: php vendor/bin/pint --test tests/TestCase.php tests/bootstrap.php tests/Feature/TestDatabaseIsolationTest.php
+        run: php vendor/bin/pint --test tests/TestCase.php tests/bootstrap.php tests/Feature/TestDatabaseIsolationTest.php scripts/prepare-ci.php tests/Unit/CiEnvironmentPreparationTest.php
 
   javascript:
     name: JavaScript tests and build

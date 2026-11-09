@@ -26,6 +26,15 @@ Do not run Pint without `--test` over unrelated files. Existing formatting debt 
 fixed by this infrastructure task; CI checks syntax throughout application PHP and Pint for the
 three new/updated test infrastructure files. Future feature PRs should format their touched files.
 
+CI explicitly runs `php scripts/prepare-ci.php` after PHP setup and before Composer/tests.
+Git does not preserve empty directories, so it creates `bootstrap/cache`, the framework cache,
+sessions, views and testing directories, and `storage/logs`. On Linux these directories belong
+to the runner with mode 0700; no recursive permission changes or world-writable directories are
+needed. The script requires `APP_ENV=testing`, does not bootstrap Laravel, load `.env`, generate
+keys, clear existing caches or access any database. Its regression runs twice in a fresh temporary
+workspace and verifies actual writes, retained files and refusal outside the testing environment.
+CI checks Pint for this script and its test in addition to the original infrastructure files.
+
 ## Database isolation
 
 `phpunit.xml` boots `tests/bootstrap.php`. It forcibly overrides inherited test environment
