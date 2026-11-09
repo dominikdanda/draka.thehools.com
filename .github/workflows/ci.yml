@@ -80,6 +80,11 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
+      - name: VPS deployment contract (synthetic fixtures only)
+        run: |
+          sh -n ops/deploy/deploy-draka.sh
+          python3 -m unittest discover -s tests/Deployment -v
+          python3 tests/Deployment/posix_contract.py
 
   gate:
     name: CI gate

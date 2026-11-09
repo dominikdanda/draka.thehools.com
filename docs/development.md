@@ -35,6 +35,13 @@ keys, clear existing caches or access any database. Its regression runs twice in
 workspace and verifies actual writes, retained files and refusal outside the testing environment.
 CI checks Pint for this script and its test in addition to the original infrastructure files.
 
+Candidate VPS deployment code lives in `ops/deploy`, outside application runtime. Its contract
+tests use only synthetic repositories/state and never connect to SSH, GitHub or a database:
+`python -m unittest discover -s tests/Deployment -v`. CI additionally runs the Linux-only
+`python3 tests/Deployment/posix_contract.py` for kernel locks, atomic symlinks and process timeouts.
+The approved PHP/JS tests and database isolation remain unchanged. Installation of the candidate
+wrapper and any migration mode requires separate owner approval; see `ops/deploy/README.md`.
+
 ## Database isolation
 
 `phpunit.xml` boots `tests/bootstrap.php`. It forcibly overrides inherited test environment

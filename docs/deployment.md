@@ -63,6 +63,10 @@ VPS dodatkowo blokuje równoległe aktywacje i cofnięcie do starszego commita.
 
 ## VPS: wymagany kontrakt, do osobnej akceptacji
 
+Projekt implementacji, wymagania systemowe, proponowana polityka migracji i szczegółowy plan
+przejścia/rollbacku są w [ops/deploy/README.md](../ops/deploy/README.md). To projekt do audytu
+po odczycie starego skryptu, nie potwierdzenie gotowości VPS. Żadnej instalacji nie wykonano.
+
 Nie zmieniono ani nie uruchomiono skryptu VPS. Dotychczasowe `ssh ... deploy` nie dowodzi obsługi
 SHA. **Nie wolno aktywować workflow ze starym wrapperem, który ignoruje argumenty i pobiera HEAD.**
 Nawet brak prawidłowego potwierdzenia wykryty po SSH nie cofnie błędnego wdrożenia.
@@ -82,7 +86,9 @@ zgody i uzgodnienia okna synchronizacji. Wrapper forced-command ma spełniać na
 - Buduje wydanie z dokładnego SHA, nie wykonuje późniejszego `git pull` ani checkout najnowszego
   main. Przed atomowym przełączeniem wydania sprawdza rzeczywisty SHA i health check; zapisuje
   ostatni wdrożony SHA atomowo pod tą samą blokadą. Błąd pozostawia dotychczasowe wydanie.
-- Nie uruchamia automatycznie migracji, seedowania, eksportów, skryptów Composer zmieniających
+- Domyślnie nie uruchamia migracji; opcjonalne nowe migracje additive wymagają osobnej zgody,
+  root-managed permitu dla dokładnego SHA/hashów i jawnego włączenia trybu z powyższego runbooka.
+  Nigdy nie uruchamia seedowania, eksportów, skryptów Composer zmieniających
   bazę ani operacji na danych graczy. Nie kopiuje plików `public/mysql-8.4` i `new/` do wydania.
   Używa stałego bezpiecznego procesu instalacji zależności, bez wykonywania hooków aplikacji
   z uprawnieniami do zmiany bazy. Ewentualne migracje mają osobny zatwierdzany plan.
