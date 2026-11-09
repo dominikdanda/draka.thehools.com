@@ -13,7 +13,7 @@ Composer's normal setup script migrates the configured database: do not use it a
 | Full PHP suite | `composer test` |
 | Specific PHP regression | `composer test -- --filter=TestDatabaseIsolationTest` |
 | Direct PHP runner | `php vendor/phpunit/phpunit/phpunit` |
-| Existing browser-script tests | `npm test` |
+| JavaScript tests (reject failures, skips, cancellations and todo) | `npm test` |
 | Asset build | `npm run build` |
 | Vite development server | `npm run dev` |
 | PHP formatting check (application directories) | `composer lint` |
@@ -25,6 +25,22 @@ PHP runs when Xdebug is installed, set `$env:XDEBUG_MODE = 'off'` for that shell
 Do not run Pint without `--test` over unrelated files. Existing formatting debt is not silently
 fixed by this infrastructure task; CI checks syntax throughout application PHP and Pint for the
 three new/updated test infrastructure files. Future feature PRs should format their touched files.
+
+CI explicitly runs `php scripts/prepare-ci.php` after PHP setup and before Composer/tests.
+Git does not preserve empty directories, so it creates `bootstrap/cache`, the framework cache,
+sessions, views and testing directories, and `storage/logs`. On Linux these directories belong
+to the runner with mode 0700; no recursive permission changes or world-writable directories are
+needed. The script requires `APP_ENV=testing`, does not bootstrap Laravel, load `.env`, generate
+keys, clear existing caches or access any database. Its regression runs twice in a fresh temporary
+workspace and verifies actual writes, retained files and refusal outside the testing environment.
+CI checks Pint for this script and its test in addition to the original infrastructure files.
+
+Candidate VPS deployment code lives in `ops/deploy`, outside application runtime. Its contract
+tests use only synthetic repositories/state and never connect to SSH, GitHub or a database:
+`python -m unittest discover -s tests/Deployment -v`. CI additionally runs the Linux-only
+`python3 tests/Deployment/posix_contract.py` for kernel locks, atomic symlinks and process timeouts.
+The approved PHP/JS tests and database isolation remain unchanged. Installation of the candidate
+wrapper and any migration mode requires separate owner approval; see `ops/deploy/README.md`.
 
 ## Database isolation
 
@@ -38,10 +54,10 @@ The isolation regression checks connection configuration and separation by execu
 Never add raw PDO, remote HTTP calls or real credentials to tests. This is application-level
 isolation, not a sandbox for malicious test code.
 
-CI uses ephemeral GitHub-hosted runners, no database service, no environment/production secrets,
-no deployment steps and a read-only GitHub token. Checkout excludes tracked live MySQL files and
+CI test jobs use ephemeral GitHub-hosted runners, no database service, no environment/production
+secrets and a read-only GitHub token. Checkout excludes tracked live MySQL files and
 legacy reference content. Composer installs with `--no-scripts`; tests bootstrap the app themselves.
-Do not change this workflow to `pull_request_target`, attach a production environment, inject
+Do not change test jobs to `pull_request_target`, attach a production environment, inject
 database secrets, or switch to a runner with production network access.
 SQLite verifies behavior but not MySQL row locking/collations; any future MySQL test job must use
 an ephemeral service with synthetic fixtures and disposable credentials, never a shared server.
@@ -84,10 +100,12 @@ Draft PR: https://github.com/dominikdanda/TheHools-Laravel/pull/1
 
 ## Human setup and verification
 
-Enable GitHub Actions if repository/organization policy disables them. After the first actual
-successful run, protect `main` with required `PHP tests` and `JavaScript tests and build` checks
-and human review. Configure contributor push/PR credentials outside this repository. No
-production secrets are needed. Require approval separately for deployment; CI never deploys.
+Enable GitHub Actions if repository/organization policy disables them. Protect `main` with required
+`PHP tests`, `JavaScript tests and build` and `CI gate` checks, strict up-to-date branches (or merge
+queue), and code-owner review as described in [deployment.md](deployment.md). Configure contributor
+push/PR credentials outside this repository. Test jobs never need production secrets. A separate
+reusable production job may run only after successful push CI for the same main SHA and owner
+activation. Keep it disabled while reviewing the initial automation PR.
 Do not claim remote automation works until its run for the exact commit has been inspected.
 
 To verify locally: run the commands above, inspect the isolation regression, and confirm both

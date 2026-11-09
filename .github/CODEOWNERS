@@ -1,0 +1,12 @@
+# Require code-owner review and dismiss stale approvals in main's ruleset.
+# Conservative default: changes affecting behavior need the owner's approval.
+* @dominikdanda
+
+# Ordinary documentation and cosmetic stylesheet changes can use auto-merge.
+/docs/*.md
+/resources/css/*.css
+/public/assets/css/*.css
+
+# Operational/security instructions still require explicit owner approval.
+/docs/development.md @dominikdanda
+/docs/deployment.md @dominikdanda

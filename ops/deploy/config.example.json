@@ -1,0 +1,10 @@
+{
+  "enabled": false,
+  "root": "/srv/draka",
+  "repository": "dominikdanda/draka.thehools.com",
+  "workflow_id": 408492923,
+  "github_config": "/etc/draka-deploy/github",
+  "git_ssh_config": "/etc/draka-deploy/git-ssh.conf",
+  "health_origin": "https://draka.thehools.com",
+  "allow_additive_migrations": false
+}

@@ -25,3 +25,4 @@ Thumbs.db
 # Laravel generated files
 /bootstrap/cache/*.php
 /storage/framework/views/*.php
+__pycache__/

@@ -3,7 +3,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "test": "node --test tests/JavaScript/*.test.cjs",
+        "test": "node scripts/test-javascript.cjs",
         "build": "vite build",
         "dev": "vite"
     },
